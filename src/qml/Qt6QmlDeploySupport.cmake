@@ -275,7 +275,12 @@ function(_qt_internal_deploy_qml_imports_for_target)
                 file(GLOB files LIST_DIRECTORIES false "${entry_PATH}/*${entry_PLUGIN}*")
                 list(FILTER files INCLUDE REGEX "${plugin_regex}")
             endif()
+            # file(INSTALL ${files} DESTINATION "${install_plugin}" FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
             file(INSTALL ${files} DESTINATION "${install_plugin}" USE_SOURCE_PERMISSIONS)
+            
+            # Set additional permissions after installation
+            file(GLOB installed_files "${install_plugin}/*")
+            file(SET_PERMISSIONS ${installed_files} OWNER_WRITE)
 
             get_filename_component(dest_plugin_abs "${dest_plugin}" ABSOLUTE)
             if(__QT_DEPLOY_TOOL STREQUAL "GRD")

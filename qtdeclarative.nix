@@ -13,14 +13,14 @@
 
 qtModule {
   pname = "qtdeclarative";
-  version = "dev";
+  # version = "6.8.0";
 
-  src = fetchgit {
-    url = "https://github.com/BerndDonner/qtdeclarative";
-    branchName = "nixos";
-    rev = "";
-    hash = "";
-  };
+  # src = fetchgit {
+  #   url = "https://github.com/BerndDonner/qtdeclarative";
+  #   branchName = "6.8.0";
+  #   rev = "768a26c0e5960f2853ec7daf428f8451cc7acc44";
+  #   hash = "";
+  # };
 
 
   propagatedBuildInputs = [
@@ -37,7 +37,9 @@ qtModule {
     # add version specific QML import path
     patches/0002-qtdeclarative-also-use-versioned-qml-paths.patch
 
-    # Backport patches for https://bugs.kde.org/show_bug.cgi?id=493116
+    patches/0003-qtdeclarative-fix-install-nixos.patch
+
+        # Backport patches for https://bugs.kde.org/show_bug.cgi?id=493116
     # FIXME: remove for 6.8.1
     (fetchpatch2 {
       url = "https://github.com/qt/qtdeclarative/commit/3330731d0cb221477ab3d856db032126403ae6a0.patch";
